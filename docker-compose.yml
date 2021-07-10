@@ -1,0 +1,26 @@
+version: '3.3'
+
+services:
+  backend:
+    build: .
+    container_name: gwaphics-backend
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/usr/src/app
+    entrypoint: [ 'bin/rails', 's', '-b', '0.0.0.0']
+
+  db:
+    image: postgres:13.1-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 'gwaphics'
+      POSTGRES_USER: 'gwaphics'
+      POSTGRES_DB: 'gwaphics'
+      TZ: Europe/Moscow
+    container_name: gwaphics-db
+    volumes:
+      - gwaphics-db:/var/lib/postgresql/data
+
+volumes:
+  gwaphics-db: { }
